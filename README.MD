@@ -1,10 +1,10 @@
-# ScribeCoding
+# ScribeCode
 
 A Claude Code skill that turns Claude into your scribe — you write the code, Claude tells you exactly what to write, where, and why.
 
 ## What it is
 
-ScribeCoding flips the usual AI-coding dynamic. Claude is the developer — it knows exactly what to build and why. You are the scribe — your job is to type it out. Claude produces **task docs**: structured markdown guides that tell you exactly what to write, where, and why every line exists. One doc at a time.
+ScribeCode flips the usual AI-coding dynamic. Claude is the developer — it knows exactly what to build and why. You are the scribe — your job is to type it out. Claude produces **task docs**: structured markdown guides that tell you exactly what to write, where, and why every line exists. One doc at a time.
 
 You don't paste. You type. You learn the why, not just the what.
 
