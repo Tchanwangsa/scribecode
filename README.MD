@@ -8,6 +8,10 @@ ScribeCode flips the usual AI-coding dynamic. Claude is the developer — it kno
 
 You don't paste. You type. You learn the why, not just the what.
 
+## Metrics
+
+[Coming soon currently running evals to figure % token, output time increase etc.]
+
 ## Commands
 
 | Command            | What it does               |
