@@ -1,20 +1,20 @@
 ---
 name: scribecode-help
 description: >
-  Quick reference card for ScribeCoding commands and workflow.
+  (scribecode) Quick reference card for ScribeCode commands and workflow.
   Trigger: /scribecode-help, "scribecode help", "what are the scribecode commands",
   "how do I use scribecode".
 ---
 
-# ScribeCoding — Quick Reference
+# ScribeCode — Quick Reference
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `/scribecode` | Activate ScribeCoding mode. Claude becomes the developer; you type the code. |
-| `/scribecode off` | Deactivate. Return to normal mode. |
-| `/scribecode-help` | This card. |
+| Command            | What it does                                                               |
+| ------------------ | -------------------------------------------------------------------------- |
+| `/scribecode`      | Activate ScribeCode mode. Claude becomes the developer; you type the code. |
+| `/scribecode off`  | Deactivate. Return to normal mode.                                         |
+| `/scribecode-help` | This card.                                                                 |
 
 ## How it works
 
@@ -52,6 +52,7 @@ description: >
 ## Small fixes
 
 For cosmetic changes (CSS tweaks, config values, renames), Claude asks:
+
 > "Small fix — want a scribedoc or should I just apply it?"
 
 Say "apply it" and Claude handles it directly.

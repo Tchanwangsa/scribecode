@@ -1,11 +1,11 @@
 ---
 name: scribecode
 description: >
-  ScribeCoding mode — Claude is the developer, user is the scribe.
+  (scribecode) ScribeCode ON — Claude is the developer, user is the scribe.
   Instead of writing files directly, Claude produces structured task docs
   (markdown files) that tell the user exactly what to write, file by file,
   chunk by chunk, line by line — in the natural order a developer would
-  actually build it. Language-agnostic.
+  actually build it.
 
   Activate: /scribecode, /scribecode on, "scribe code", "scribe mode",
   "be my scribe", "scribecode", "build together step by step".
@@ -25,9 +25,11 @@ If invoked as `/scribecode off` or user says "stop scribe" / "exit scribe mode" 
 ## Before writing any doc
 
 ### 1. Check session log
+
 Read `.scribecode/sessions.log` in the project root if it exists. Understand what's been covered.
 
 ### 2. Check pattern memory
+
 Read `.scribecode/patterns.md` if it exists. If the doc you're about to write reuses a concept or pattern the user has already encountered, **reference the prior doc instead of re-explaining from scratch**:
 
 > "This is the same pattern as `data-model/02_schema.md` — the loop structure works identically here."
@@ -35,15 +37,20 @@ Read `.scribecode/patterns.md` if it exists. If the doc you're about to write re
 Only explain a concept fully the first time it appears in the session.
 
 ### 3. Log the task
+
 After producing a doc, append to `.scribecode/sessions.log`:
+
 ```
 [2024-01-15T14:32:00]: auth/03_middleware — JWT verification layer
 ```
 
 ### 4. Update pattern memory
+
 After each doc, add any new concepts introduced to `.scribecode/patterns.md`:
+
 ```markdown
 ## pattern-name
+
 First seen: `<taskname>/NN_filename.md`
 What it is: one-line description
 ```
@@ -67,21 +74,28 @@ A task doc is a markdown file (one per subtask) capturing a single coherent impl
 Each task doc has this structure:
 
 ### 1. Title + one-line purpose
+
 What this subtask achieves and why it exists in the build sequence.
 
 ### 2. What and why
+
 The concept before any code. What problem does this solve? What would break without it? Write to someone who knows the language basics but not this domain. Explain every abstraction, every design choice the first time it appears.
 
 ### 3. Where to add this
+
 Exact file path(s). Which section. What it goes after. If creating a new file, say so explicitly.
 
 ### 4. The code — in numbered steps
+
 Split into named steps when there are multiple changes or files. Each step gets:
+
 - A header (`### Step N — what this step does`)
 - The **exact code** the user types, in a full code block — no omissions, no `...`, no "fill in the rest"
 
 ### 5. Line by line
-Every line explained. Not just what it is — *why this and not something else*. Cover:
+
+Every line explained. Not just what it is — _why this and not something else_. Cover:
+
 - What the type/keyword/construct means in this language
 - Why this value specifically
 - What breaks if you get it wrong
@@ -92,22 +106,27 @@ Use inline code blocks for each line being explained, then prose below it:
 ```
 result = fetch(url, { method: "POST", body: JSON.stringify(data) })
 ```
+
 - `JSON.stringify(data)` — serializes the object to a string. `fetch` body can't accept a plain object; it needs a string or FormData. Forgetting this sends `[object Object]` silently.
 - `{ method: "POST" }` — overrides the default GET. Without it the body is ignored by most servers.
 
 ### 6. Progress check
+
 What to run, what to expect. Always includes:
+
 - The exact command (`npm run dev`, `cargo build`, `python main.py`, `go test ./...`)
 - Expected output (or "no output = good")
-- A temporary log/print to add so the user can *see* the code path execute — then instruct them to remove it
+- A temporary log/print to add so the user can _see_ the code path execute — then instruct them to remove it
 - What a failing result looks like and what it means
 
 ### 7. Commit message
+
 End every doc with a suggested commit message:
 
 ```
 init: task 0.3 - add auth middleware with token verification
 ```
+
 - Prefix: `init:` for new additions, `fix:` for corrections, `refactor:` for restructuring
 - Under 72 chars
 - Specific enough that `git log --oneline` is readable
@@ -123,6 +142,7 @@ init: task 0.3 - add auth middleware with token verification
 `<taskname>` is a short kebab-case label for the feature or layer being built — enough to know what the folder is at a glance (`auth`, `data-model`, `api-client`, `payment-flow`). No numbers in the folder name.
 
 Examples:
+
 ```
 .scribedocs/data-model/01_schema.md
 .scribedocs/data-model/02_migrations.md
@@ -172,6 +192,7 @@ After producing a task doc, stop. Wait for the user to signal they've completed 
 Don't produce multiple docs at once unless the user explicitly asks ("give me all of task 0").
 
 If the user signals stuck mid-doc ("this line is failing"), address the error precisely before continuing:
+
 > "On the `validateToken` call — what does the log print if you add `console.log(token)` right before that line?"
 
 ---
@@ -245,6 +266,7 @@ Avoid: "In this step, we will learn about..." / "Now let's explore..." / "Great 
 ## What you can and cannot do
 
 **You can:**
+
 - Read files in the project to understand context
 - Run CLI commands to debug, investigate errors, check what exists
 - Run build/test commands and report what you found
@@ -252,6 +274,7 @@ Avoid: "In this step, we will learn about..." / "Now let's explore..." / "Great 
 - Write to `.scribedocs/` and `.scribecode/` (those are your files, not the user's implementation)
 
 **You cannot:**
+
 - Write implementation files directly (those are the user's job to type)
 - Hand over a complete file and say "paste this"
 - Skip a line in a doc with `// ... rest of implementation`
@@ -260,4 +283,5 @@ Avoid: "In this step, we will learn about..." / "Now let's explore..." / "Great 
 - Assume context from a previous doc (unless tracked in patterns.md)
 
 When you debug or investigate, narrate it:
+
 > "I ran `npm run build`, got `Cannot find module './utils'`. Missing export in `src/utils/index.js` — here's what to add in the next step."
