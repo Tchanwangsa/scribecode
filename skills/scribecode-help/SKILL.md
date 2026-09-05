@@ -1,62 +1,31 @@
 ---
 name: scribecode-help
 description: >
-  (scribecode) Quick reference card for ScribeCode commands and workflow.
-  Trigger: /scribecode-help, "scribecode help", "what are the scribecode commands",
-  "how do I use scribecode".
+  (scribecode) Show a concise reference for ScribeCode commands and its
+  feature-by-feature workflow. Trigger for /scribecode-help or questions about
+  how to use ScribeCode.
 ---
 
-# ScribeCode — Quick Reference
+# ScribeCode quick reference
 
-## Commands
+| Command | What it does |
+| --- | --- |
+| `/scribecode` | Start ScribeCode mode. |
+| `/scribecode off` | Return to normal mode. |
+| `/scribecode-help` | Show this reference. |
 
-| Command            | What it does                                                               |
-| ------------------ | -------------------------------------------------------------------------- |
-| `/scribecode`      | Activate ScribeCode mode. Claude becomes the developer; you type the code. |
-| `/scribecode off`  | Deactivate. Return to normal mode.                                         |
-| `/scribecode-help` | This card.                                                                 |
+ScribeCode inspects the project and writes one concise feature doc at a time to `.scribedocs/`. Each doc gives exact file locations, copyable code blocks or focused diffs, a runnable check, and a production-style commit message.
 
-## How it works
+The workflow follows working product slices rather than architectural tasks: build something visible or usable now, verify it, commit it, then choose the next slice. Utilities and abstractions appear only when the current feature needs them.
 
-1. You say `/scribecode` and describe what you're building
-2. Claude asks one message worth of questions (stack, what's scaffolded)
-3. Claude produces a **task doc** — exact code, exact location, every line explained
-4. You open the doc in one pane, your editor in another. You type it out.
-5. You say "done" / "next" / "." when finished
-6. Claude produces the next doc
+Before setup or integration work, ScribeCode checks the current official quickstart and prefers the framework or package CLI. It gives you the normal scaffold/install command instead of rebuilding generated `package.json`, TypeScript, or framework configuration by hand.
 
-## Output files
+The user types the implementation. Say `done`, `next`, or `.` when the current slice works; if it fails, share the error and ScribeCode will revise the current instructions.
 
-```
-.scribedocs/
-  data-model/
-    01_schema.md
-    02_migrations.md
-  auth/
-    01_middleware.md
-    02_token-refresh.md
+Only the current slice is fully authored. If you ask for advance planning, ScribeCode may add up to four short future specs without locking in code, filenames, or symbol names; it revises those specs when your implementation changes the assumptions behind them.
 
-.scribecode/
-  sessions.log     ← what's been built so far
-  patterns.md      ← concepts introduced (no re-explaining)
-```
+If you question or change an instruction, ScribeCode answers your concern first and does not assume you implemented the change. When you move on, it checks the actual project, rewrites affected docs to match your decisions, and then updates any cascading future specs.
 
-## What Claude will not do in scribecode mode
+Doc numbers stay local. They never appear in source comments, product text, or commit messages.
 
-- Write implementation files directly
-- Hand you a complete file to paste
-- Skip lines with `// ...`
-- Produce multiple docs at once (unless you ask)
-- Write a progress check that just says "run your tests"
-
-## Small fixes
-
-For cosmetic changes (CSS tweaks, config values, renames), Claude asks:
-
-> "Small fix — want a scribedoc or should I just apply it?"
-
-Say "apply it" and Claude handles it directly.
-
-## Deactivate
-
-`/scribecode off` or say "stop scribe" / "exit scribe mode"
+For a tiny cosmetic fix, ScribeCode asks whether to write a short doc or apply the fix directly.
